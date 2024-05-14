@@ -43,7 +43,26 @@
 \end{frame}
 
 \section[1.Introduction]{1. Introduction}\label{sec:1}
+\begin{frame}
+  \begin{center}
+    \Huge 1.Introduction
+  \end{center}
+\end{frame}
 \subsection[1.1 General]{1.1 总体介绍}\label{subsec:1-1}
+
+\begin{frame}
+  \frametitle{1. Introduction}
+  \begin{figure}
+    \includegraphics[width=.5\textwidth, height=.5\textheight, keepaspectratio]{images/cover.png}
+  \end{figure}
+  \begin{itemize}
+    \item 开源地址: \url{https://github.com/ZaidQureshi/bam}
+  \end{itemize}
+  \blfootnote{
+    \printbibliography[heading=none,keyword=bam]
+  }
+  
+\end{frame}
 
 \begin{frame}[t]
   \frametitle{1.Introduction}
@@ -74,7 +93,11 @@
 
   \vfill
   \pause% 动态展示以下内容
-  传统上，GPU依赖于主机CPU来启动对数据存储的访问，这对于具有已知数据访问模式的GPU应用来说是合适的。然而，随着图分析、数据分析、推荐系统或图神经网络等新兴应用的出现，这些应用需要更细粒度的、依赖于数据的存储访问，而CPU启动的存储访问由于高CPU-GPU同步开销、I/O流量放大和长的CPU处理延迟而变得不适合。
+  传统上，GPU依赖于主机CPU来启动对数据存储的访问
+  \begin{itemize}
+    \item CPU启动的存储访问由于高CPU-GPU同步开销、I/O流量放大和长的CPU处理延迟而变得不适合
+    \item 上述应用场景需要更细粒度的、依赖于数据的存储访问
+  \end{itemize}
   % \begin{enumerate}
   %   \item 带序号的文本内容
   %     \begin{enumerate}
@@ -146,6 +169,11 @@
 % \end{frame}
 
 \section[2.Background]{2.Background}\label{sec:2}
+\begin{frame}
+  \begin{center}
+    \Huge 2.Background
+  \end{center}
+\end{frame}
 \subsection{2.1 PCIe介绍}\label{sec:2-1}
 % \makeatletter
 % \begin{frame}[t]
@@ -220,7 +248,7 @@
     \item SSD收到通知，从SQ中取走指令；
     \item SSD执行指令；
     \item 指令执行完成，SSD往CQ写入指令执行结果；
-    \item SSD通知Host指令执行完成；
+    \item SSD通过中断通知Host指令执行完成；
     \item Host收到通知，处理CQ，查看指令完成状态；
     \item Host处理完CQ中的指令执行结果，通过DB回复SSD
   \end{enumerate}
@@ -231,12 +259,25 @@
 \end{frame}
 
 \section[3.Architecture]{3.BaM System and Architecture}\label{sec:3}
+\begin{frame}
+  \begin{center}
+    \Huge 3.BaM System and Architecture
+  \end{center}
+\end{frame}
 \subsection{3.1 BaM System}\label{sec:3-1}
 \begin{frame}
   \frametitle{3.1 BaM 总体架构}
-  BaM（Big accelerator Memory）系统的总体架构旨在提供一个高效、细粒度的存储访问机制，允许GPU（图形处理单元）线程直接、按需地访问存储设备上的数据。BaM的设计目标是提高存储访问性能，同时减少CPU（中央处理单元）的介入，从而降低CPU-GPU同步开销和操作系统内核的软件瓶颈。
+  BaM（Big accelerator Memory）系统的总体架构旨在提供一个高效、细粒度的存储访问机制，允许GPU线程直接、按需地访问存储设备上的数据。BaM的设计目标是提高存储访问性能，同时减少CPU的介入，从而降低CPU-GPU同步开销和操作系统内核的软件瓶颈。
   \begin{figure}
     \includegraphics[width=.5\textwidth, height=.5\textheight, keepaspectratio]{images/bam.png}
+  \end{figure}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Comparison with CPU-initiated I/O}
+  \begin{figure}
+    \includegraphics[width=.8\textwidth, height=.8\textheight, keepaspectratio]{images/comparison.png}
   \end{figure}
 \end{frame}
 
@@ -328,11 +369,17 @@
 
 \section[4.Evaluation]{4.Evaluation}\label{sec:4}
 
+
+\begin{frame}
+  \begin{center}
+    \Huge 4.Evaluation
+  \end{center}
+\end{frame}
 \begin{frame}
   \frametitle{4.Evaluation}
   \framesubtitle{BaM Prototype System}
   \begin{itemize}
-    \item 定制化驱动
+    \item 定制化SSD驱动
     \begin{itemize}
       \item 利用 GPUDirect RDMA API 来固定和映射NVMe 队列和 I/O 缓冲区到GPU内存中。
       \item 利用 GPUDirect Async将 NVMe SSD 门铃(DB寄存器)映射到 CUDA 地址空间，以便 GPU 线程可以按需写Doorbell register。
@@ -394,7 +441,7 @@
 \begin{frame}
   \frametitle{4.Evaluation}
   \framesubtitle{Impact of SSD type}
-  作者不仅适用了Intel Optane SSD测试，还使用性能不同的Samsung S980PRO和Samsung Datacenter S1735进行对比测试。
+  作者不局限于Intel Optane SSD，还使用性能不同的Samsung S980PRO和Samsung Datacenter S1735进行对比测试。
   \begin{itemize}
     \item 测试环境:使用对应型号的4块SSD进行测试，以利用PCIe x16的带宽
   \end{itemize}
