@@ -112,7 +112,7 @@
     \let\ucasbeamertemplength\ucasbeamerlogoheight%
   \fi
   \leavevmode\hskip\ucasbeamermargin%
-  \includegraphics[height=\ucasbeamertemplength]{\ucasbeamerfilenamelogo}
+  \includegraphics[height=\ucasbeamertemplength,right]{\ucasbeamerfilenamelogo}
 }
 
 % 设置页脚的信息（姓名、题目、日期、页码）
@@ -148,12 +148,12 @@
     {\usebeamerfont{institute} \insertinstitute}%
     \medskip
 
-    \includegraphics%
-    [
-      width=.6\textwidth,
-      height=.15\textheight,
-      keepaspectratio
-    ]{\ucasbeamerfilenamesublogo}%
+    % \includegraphics%
+    % [
+    %   width=.6\textwidth,
+    %   height=.15\textheight,
+    %   keepaspectratio
+    % ]{\ucasbeamerfilenamesublogo}%
     \vfill
 
     {\usebeamerfont{date}\centering \insertdate}%
